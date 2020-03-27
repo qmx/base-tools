@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Install Rust toolchain
-        uses: action_rs/toolchain@v1
+        uses: action-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
