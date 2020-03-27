@@ -15,6 +15,9 @@ jobs:
         crate:
           - sccache
     steps:
+      - name: update repository
+        run: sudo apt-get update -y
+
       - name: install musl
         run: sudo apt-get install -y musl-dev
 
