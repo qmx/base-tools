@@ -27,7 +27,6 @@ jobs:
           toolchain: stable
           profile: minimal
           target: ${{ matrix.target }}
-          cross: true
           override: true
 
       - name: Build
@@ -37,6 +36,7 @@ jobs:
           RUSTFLAGS: "-C linker=rust-lld -C linker-flavor=ld.lld"
           CARGO_INSTALL_ROOT: /tmp/${{ matrix.target }}
         with:
+          use-cross: true
           command: install
           args: --target ${{ matrix.target }} ${{ matrix.crate }}
 
