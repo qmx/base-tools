@@ -29,9 +29,10 @@ jobs:
       - name: Build
         uses: actions-rs/cargo@v1
         env:
+          CC: clang
+          RUSTFLAGS: "-C linker=rust-lld -C linker-flavor=ld.lld"
           CARGO_INSTALL_ROOT: /tmp/${{ matrix.target }}
         with:
-          use-cross: true
           command: install
           args: --target ${{ matrix.target }} ${{ matrix.crate }}
 
