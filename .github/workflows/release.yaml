@@ -37,5 +37,5 @@ jobs:
           CARGO_INSTALL_ROOT: /tmp
         with:
           command: install
-          args: --release --target ${{ matrix.target }} ${{ matrix.crate }}
+          args: --target ${{ matrix.target }} ${{ matrix.crate }}
 
