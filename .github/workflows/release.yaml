@@ -1,0 +1,38 @@
+name: ci
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: 
+          - x86_64-unknown-linux-musl
+          - armv7-unknown-linux-musleabihf
+        binary:
+          - starship
+          - sccache
+          - cargo-bloat
+          - cargo-edit
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Install Rust toolchain
+        uses: qmx/toolchain@multi-target
+        with:
+          toolchain: stable
+          profile: minimal
+          targets: x86_64-unknown-linux-musl, armv7-unknown-linux-musleabihf
+          override: true
+
+      - name: Build
+        uses: actions-rs/cargo@v1
+        env:
+          CC: clang
+          RUSTFLAGS: "-C linker=rust-lld -C linker-flavor=ld.lld"
+          CARGO_INSTALL_ROOT: /tmp
+        with:
+          command: install
+          args: --release --target ${{ matrix.target }} ${{ matrix.crate }}
+
