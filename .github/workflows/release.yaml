@@ -15,6 +15,12 @@ jobs:
         crate:
           - sccache
     steps:
+      - name: install musl
+        run: sudo apt-get install -y musl-dev
+
+      - name: install extra development libraries
+        run: sudo apt-get install -y libssl-dev
+
       - name: Checkout repository
         uses: actions/checkout@v1
 
