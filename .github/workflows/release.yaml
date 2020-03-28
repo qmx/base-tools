@@ -13,16 +13,10 @@ jobs:
           - x86_64-unknown-linux-musl
           - armv7-unknown-linux-musleabihf
         crate:
-          - sccache
+          - "sccache --no-default-features"
     steps:
-      - name: update repository
-        run: sudo apt-get update -y
-
       - name: install musl
-        run: sudo apt-get install -y musl-dev
-
-      - name: install extra development libraries
-        run: sudo apt-get install -y libssl-dev
+        run: sudo apt-get install -y musl-dev libssl-dev g++-multilib clang
 
       - name: Checkout repository
         uses: actions/checkout@v1
