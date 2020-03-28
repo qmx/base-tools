@@ -30,18 +30,14 @@ jobs:
           override: true
 
       - name: Build
-        uses: actions-rs/cargo@v1
+        run: make ${{ matrix.crate }}
         env:
-          CC: clang
-          RUSTFLAGS: "-C linker=rust-lld -C linker-flavor=ld.lld"
-          CARGO_INSTALL_ROOT: /tmp/dist/${{ matrix.target }}
-        with:
-          command: install
-          args: --target ${{ matrix.target }} ${{ matrix.crate }}
+          INSTALL_ROOT: /tmp/dist/${{ matrix.target }}
+          TARGET: ${{ matrix.target }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
-          name: dist
-          path: /tmp/dist
+          name: "${{ matrix.crate }}-${{ matrix.target }}"
+          path: "/tmp/dist/${{ matrix.target }}/bin/${{ matrix.crate }}"
 
